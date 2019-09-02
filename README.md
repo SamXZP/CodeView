@@ -12,7 +12,7 @@
 
 `CodeView` 是**纯swift**编写的一个可以高度自定义手机验证码输入的控件。
 
-**原理： **基于UITextField，使用UILabel来代替验证码的显示，使用CAShapeLayer代替光标的显示，使用CALayer绘制底部线条
+**原理** 基于UITextField，使用UILabel来代替验证码的显示，使用CAShapeLayer代替光标的显示，使用CALayer绘制底部线条
 
 首先创建三个数组
 
