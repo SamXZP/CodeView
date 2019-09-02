@@ -2,7 +2,7 @@
 
 
 
-## 预览图
+### 预览图
 
 ![未输入效果](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/default.png?raw=true)
 
@@ -18,9 +18,9 @@
 
 * **lineArray：**  自定义底部线条存放的数组，如果需求是带边框的输入格式，只需修改这个数组里面元素的格式即可
 
-* **layerArray：**自定义的光标数组
+* **layerArray：** 自定义的光标数组
 
-* **labelArray：**自定义文字存放的数组
+* **labelArray：** 自定义文字存放的数组
 
 ### 使用方法
 
@@ -98,4 +98,3 @@ subView.layer.addSublayer(layer)
 ### 其他
 
 如果遇到问题可以联系我的邮箱：gztzxzp@gmail.com
-
