@@ -1,14 +1,14 @@
-#CodeView
+# CodeView
 
 
 
-##预览图
+## 预览图
 
 ![未输入效果](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/default.png?raw=true)
 
 ![验证码输入](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/input.png?raw=true)
 
-##说明
+### 说明
 
 `CodeView` 是**纯swift**编写的一个可以高度自定义手机验证码输入的控件。
 
@@ -22,7 +22,7 @@
 
 * **labelArray：**自定义文字存放的数组
 
-###使用方法
+### 使用方法
 
 ```swift
 let view = CodeView.init(frame: CGRect.init(x: 50, y: 160, width: SCREEN_WIDTH-100, height: 50),codeNumber: 4)
@@ -79,7 +79,7 @@ self.view.addSubview(view)
 
 ```
 
-###输入框需求
+### 输入框需求
 
 如果需求是输入框则需要修改下面代码，设置CALayer的边框、圆角即可。
 
@@ -95,7 +95,7 @@ if index == 0 {
 subView.layer.addSublayer(layer)
 ```
 
-###其他
+### 其他
 
 如果遇到问题可以联系我的邮箱：gztzxzp@gmail.com
 
