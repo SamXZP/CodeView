@@ -2,13 +2,13 @@
 
 
 
-###预览图
+##预览图
 
 ![未输入效果](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/default.png?raw=true)
 
 ![验证码输入](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/input.png?raw=true)
 
-###说明
+##说明
 
 `CodeView` 是**纯swift**编写的一个可以高度自定义手机验证码输入的控件。
 
