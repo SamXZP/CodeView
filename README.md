@@ -26,9 +26,8 @@
 
 ```swift
 let view = CodeView.init(frame: CGRect.init(x: 50, y: 160, width: SCREEN_WIDTH-100, height: 50),codeNumber: 4)
-view.beginEdit()
 view.codeBlock = { [weak self] code in
-print("\n\n=======>验证码是：\(code)")
+    print("\n\n=======>您输入的验证码是：\(code)")
 }
 self.view.addSubview(view)
 ```
@@ -55,14 +54,14 @@ self.view.addSubview(view)
         let bgLabel:UILabel = labelArray[index]
         
         if (index < verStr.count){
-            changeViewLayerIndex(index: index, hidden: true)
+            changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: true)
             let str : NSString = verStr as NSString
             bgLabel.text = str.substring(with: NSMakeRange(index, 1))
         }
         else{
-            changeViewLayerIndex(index: index, hidden: index == verStr.count ? false : true)
+            changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: index == verStr.count ? false : true)
             if ( verStr.count == 0) {
-                changeViewLayerIndex(index: 0, hidden: false)
+                changeOpacityAnimalForShapeLayerWithIndex(index: 0, hidden: false)
             }
             bgLabel.text = ""
         }
@@ -70,9 +69,9 @@ self.view.addSubview(view)
     
     for index in 0..<layerArray.count {
         if (index > verStr.count) {
-            changeLayerColorIndex(index: index, hidden: false)
+            changeColorForLayerWithIndex(index: index, hidden: false)
         }else{
-            changeLayerColorIndex(index: index, hidden: true)
+            changeColorForLayerWithIndex(index: index, hidden: true)
         }
     }
 }
