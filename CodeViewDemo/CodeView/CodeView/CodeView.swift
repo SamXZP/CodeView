@@ -105,7 +105,8 @@ extension CodeView{
     @objc func textChage(_ textField: UITextField) {
         var verStr:String = textField.text ?? ""
         if verStr.count > codeNumber {
-            textField.text = String(textField.text![..<textField.text!.index(textField.text!.startIndex, offsetBy: codeNumber)])
+            let substring = textField.text?.prefix(codeNumber)
+            textField.text = String(substring ?? "")
             verStr = textField.text ?? ""
         }
         if  verStr.count >= codeNumber {
