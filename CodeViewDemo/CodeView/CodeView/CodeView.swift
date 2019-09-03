@@ -15,12 +15,12 @@ class CodeView: UIView {
     fileprivate var shapeArray:[CAShapeLayer] = Array()
     fileprivate var labelArray:[UILabel] = Array()
     fileprivate var layerArray:[CALayer] = Array()
-    open var codeNumber:Int = 0
-    open var mainColor:UIColor?
-    open var normalColor:UIColor?
-    open var labelTextColor:UIColor?
-    open var codeBlock: ((String) -> Void)?
-    open lazy var textField: UITextField = {
+    public var codeNumber:Int = 0
+    public var mainColor:UIColor?
+    public var normalColor:UIColor?
+    public var labelTextColor:UIColor?
+    public var codeBlock: ((String) -> Void)?
+    public lazy var textField: UITextField = {
             let view = UITextField.init()
             view.tintColor = UIColor.clear
             view.backgroundColor = UIColor.clear
@@ -35,12 +35,12 @@ class CodeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     init(frame:CGRect,codeNumber:Int = 6,labelTextColor:UIColor = UIColor.black, mainColor:UIColor = UIColor.orange,normalColor:UIColor = UIColor.gray) {
         super.init(frame: frame)
         self.codeNumber = codeNumber
@@ -50,7 +50,7 @@ class CodeView: UIView {
         setUpSubview()
     }
 
-    open func setUpSubview() {
+    fileprivate func setUpSubview() {
         let margin = (self.bounds.width - CGFloat(codeNumber)*per_width)/CGFloat(codeNumber-1)
         self.addSubview(textField)
         textField.frame = self.bounds
@@ -75,12 +75,12 @@ class CodeView: UIView {
             label.frame = CGRect.init(x: 0, y: 0, width: per_width, height: per_width)
             label.textAlignment = .center
             label.textColor = labelTextColor
-            label.backgroundColor = UIColor.clear  //widgetBackColor
+            label.backgroundColor = UIColor.clear
             label.font = UIFont.systemFont(ofSize: 20)
             subView.addSubview(label)
             
             //光标
-            let path  = UIBezierPath.init(rect: CGRect.init(x: per_width/2, y: 15, width: 2, height:per_width-30)) //(K_W - 20)/2, y: K_W/2, width: 20, height:1)
+            let path  = UIBezierPath.init(rect: CGRect.init(x: per_width/2, y: 15, width: 2, height:per_width-30))
             let line = CAShapeLayer.init()
             line.path = path.cgPath
             line.fillColor = mainColor?.cgColor
@@ -109,26 +109,25 @@ extension CodeView{
             verStr = textField.text ?? ""
         }
         if  verStr.count >= codeNumber {
-            // endEdit()
             if (self.codeBlock != nil) {
                 self.codeBlock?(textField.text ?? "")
             }
         }
         
         for index in 0..<codeNumber {
-            let bgLabel:UILabel = labelArray[index]
+            let label:UILabel = labelArray[index]
             
             if (index < verStr.count){
                 changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: true)
                 let str : NSString = verStr as NSString
-                bgLabel.text = str.substring(with: NSMakeRange(index, 1))
+                label.text = str.substring(with: NSMakeRange(index, 1))
             }
             else{
                 changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: index == verStr.count ? false : true)
                 if ( verStr.count == 0) {
                     changeOpacityAnimalForShapeLayerWithIndex(index: 0, hidden: false)
                 }
-                bgLabel.text = ""
+                label.text = ""
             }
         }
         
@@ -142,7 +141,7 @@ extension CodeView{
     }
 
     //设置底部layer的颜色
-    func changeColorForLayerWithIndex(index:NSInteger, hidden:Bool) {
+    fileprivate func changeColorForLayerWithIndex(index:NSInteger, hidden:Bool) {
         let layer = layerArray[index];
         if (hidden) {
             layer.backgroundColor = mainColor?.cgColor;
@@ -151,27 +150,7 @@ extension CodeView{
         }
     }
 
-    func clearAllData() {
-        textField.text = ""
-        for index in 0..<codeNumber {
-            let bgLabel:UILabel = labelArray[index]
-            
-            if (index < textField.text?.count ?? 0){
-                changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: true)
-                let str : NSString = textField.text! as NSString
-                bgLabel.text = str.substring(with: NSMakeRange(index, 1))
-            }
-            else{
-                changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: index == textField.text?.count ? false : true)
-                if ( textField.text?.count == 0) {
-                    changeOpacityAnimalForShapeLayerWithIndex(index: 0, hidden: false)
-                }
-                bgLabel.text = ""
-            }
-        }
-    }
-    
-    func changeOpacityAnimalForShapeLayerWithIndex(index:Int, hidden:Bool) {
+    fileprivate func changeOpacityAnimalForShapeLayerWithIndex(index:Int, hidden:Bool) {
         let line = shapeArray[index]
         if hidden {
             line.removeAnimation(forKey: "kOpacityAnimation")
@@ -184,14 +163,14 @@ extension CodeView{
         }
     }
     
-    func startEdit() {
+    public func startEdit() {
         textField.becomeFirstResponder()
     }
-    func endEdit() {
+    public func endEdit() {
         textField.resignFirstResponder()
     }
     
-    func opacityAnimation() -> CABasicAnimation {
+    fileprivate func opacityAnimation() -> CABasicAnimation {
         let animation = CABasicAnimation.init(keyPath: "opacity")
         animation.fromValue = 1.0
         animation.toValue = 0.0

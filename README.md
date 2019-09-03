@@ -10,13 +10,14 @@
 
 ### 说明
 
-`CodeView` 是**纯swift**编写的一个可以高度自定义手机验证码输入的控件。
+`CodeView` 是纯`swift`编写的一个可以高度自定义手机验证码输入的控件。
 
-**原理** 基于UITextField，使用UILabel来代替验证码的显示，使用CAShapeLayer代替光标的显示，使用CALayer绘制底部线条
+
+**原理：** 基于UITextField，使用UILabel来代替验证码的显示，使用CAShapeLayer代替光标的显示，使用CALayer绘制底部线条
 
 首先创建三个数组
 
-* **lineArray：**  自定义底部线条存放的数组，如果需求是带边框的输入格式，只需修改这个数组里面元素的格式即可
+* **shapeArray：**  自定义底部线条存放的数组，如果需求是带边框的输入格式，只需修改这个数组里面元素的格式即可
 
 * **layerArray：** 自定义的光标数组
 
@@ -51,19 +52,19 @@ self.view.addSubview(view)
     }
     
     for index in 0..<codeNumber {
-        let bgLabel:UILabel = labelArray[index]
+        let label:UILabel = labelArray[index]
         
         if (index < verStr.count){
             changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: true)
             let str : NSString = verStr as NSString
-            bgLabel.text = str.substring(with: NSMakeRange(index, 1))
+            label.text = str.substring(with: NSMakeRange(index, 1))
         }
         else{
             changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: index == verStr.count ? false : true)
             if ( verStr.count == 0) {
                 changeOpacityAnimalForShapeLayerWithIndex(index: 0, hidden: false)
             }
-            bgLabel.text = ""
+            label.text = ""
         }
     }
     
