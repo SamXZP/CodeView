@@ -46,7 +46,6 @@ self.view.addSubview(view)
         verStr = textField.text ?? ""
     }
     if  verStr.count >= codeNumber {
-        // endEdit()
         if (self.codeBlock != nil) {
             self.codeBlock?(textField.text ?? "")
         }
@@ -54,30 +53,17 @@ self.view.addSubview(view)
     
     for index in 0..<codeNumber {
         let label:UILabel = labelArray[index]
-        
         if (index < verStr.count){
-            changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: true)
             let str : NSString = verStr as NSString
             label.text = str.substring(with: NSMakeRange(index, 1))
         }
         else{
-            changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: index == verStr.count ? false : true)
-            if ( verStr.count == 0) {
-                changeOpacityAnimalForShapeLayerWithIndex(index: 0, hidden: false)
-            }
             label.text = ""
         }
-    }
-    
-    for index in 0..<layerArray.count {
-        if (index > verStr.count) {
-            changeColorForLayerWithIndex(index: index, hidden: false)
-        }else{
-            changeColorForLayerWithIndex(index: index, hidden: true)
-        }
+        changeOpacityAnimalForShapeLayerWithIndex(index: index, hidden: index == verStr.count ? false : true)
+        changeColorForLayerWithIndex(index: index, hidden: index > verStr.count ? false : true)
     }
 }
-
 ```
 
 ### 输入框需求
