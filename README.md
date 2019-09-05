@@ -24,9 +24,9 @@
 
 ### 使用方法 
 
- `style`  验证码输入的风格，可根据自己的需求选择
-
  `codeNumber`  验证码的长度，一般是4/6位 默认6位
+
+ `style`  验证码输入的风格，可根据自己的需求选择
 
 * **CodeStyle_line**          底部线条风格
 * **CodeStyle_border**    带边框的风格
@@ -41,7 +41,7 @@ self.view.addSubview(view)
 
 ### 主要代码
 
-**根据UITextField的text改变，移动光标和底部线条**
+**根据UITextField的text改变，移动光标**
 
 ```swift
 @objc func textChage(_ textField: UITextField) {
