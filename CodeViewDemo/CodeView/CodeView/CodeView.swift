@@ -8,7 +8,7 @@
 
 import UIKit
 
-let per_width:CGFloat = 50
+let margin:CGFloat = 12    //两个验证码之间的间距 随需求可以更改
 
 enum  CodeStyle {
     case CodeStyle_line      //下划线格式
@@ -58,12 +58,12 @@ class CodeView: UIView {
     }
 
     fileprivate func setUpSubview() {
-        let margin = (self.bounds.width - CGFloat(codeNumber)*per_width)/CGFloat(codeNumber-1)
+        let width = (self.bounds.width - CGFloat(codeNumber-1)*margin)/CGFloat(codeNumber)  //每一个验证码的宽度
         self.addSubview(textField)
         textField.frame = self.bounds
         for index in 0..<codeNumber  {
             let subView = UIView.init()
-            subView.frame = CGRect.init(x: (per_width+margin)*CGFloat(index), y: 0, width: per_width, height: per_width)
+            subView.frame = CGRect.init(x: (width+margin)*CGFloat(index), y: 0, width: width, height: width)
             subView.isUserInteractionEnabled = false
             self.addSubview(subView)
             
@@ -71,14 +71,14 @@ class CodeView: UIView {
             let layer = CALayer.init()
             
             if style == .CodeStyle_line {
-                layer.frame = CGRect.init(x: 6, y: per_width-1, width: per_width-12, height: 1)
+                layer.frame = CGRect.init(x: 0, y: width-1, width: width, height: 1)
                 if index == 0 {
                     layer.backgroundColor = mainColor?.cgColor
                 }else{
                     layer.backgroundColor = normalColor?.cgColor
                 }
             }else{
-                layer.frame = CGRect.init(x: 0, y: 0, width: per_width, height: per_width)
+                layer.frame = CGRect.init(x: 0, y: 0, width: width, height: width)
                 layer.borderWidth = 0.5
                 layer.cornerRadius = 5
                 layer.backgroundColor = UIColor.white.cgColor
@@ -92,7 +92,7 @@ class CodeView: UIView {
             
             //验证码文字
             let label = UILabel.init()
-            label.frame = CGRect.init(x: 0, y: 0, width: per_width, height: per_width)
+            label.frame = CGRect.init(x: 0, y: 0, width: width, height: width)
             label.textAlignment = .center
             label.textColor = labelTextColor
             label.backgroundColor = UIColor.clear
@@ -100,7 +100,7 @@ class CodeView: UIView {
             subView.addSubview(label)
             
             //光标
-            let path  = UIBezierPath.init(rect: CGRect.init(x: per_width/2, y: 15, width: 2, height:per_width-30))
+            let path  = UIBezierPath.init(rect: CGRect.init(x: width/2, y: 15, width: 2, height:width-30))
             let line = CAShapeLayer.init()
             line.path = path.cgPath
             line.fillColor = mainColor?.cgColor

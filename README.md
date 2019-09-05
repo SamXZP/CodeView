@@ -24,12 +24,7 @@
 
 ### 使用方法 
 
- `codeNumber`  验证码的长度，一般是4/6位 默认6位
-
- `style`  验证码输入的风格，可根据自己的需求选择
-
-* **CodeStyle_line**          底部线条风格
-* **CodeStyle_border**    带边框的风格
+**把项目Clone或者download到本地，然后把CodeView.swift文件拖到自己的项目，下面是使用方法:**
 
 ```swift
 let view = CodeView.init(frame: CGRect.init(x: 50, y: 160, width: SCREEN_WIDTH-100, height: 50),codeNumber: 4,style: .CodeStyle_line)
@@ -38,6 +33,15 @@ view.codeBlock = { [weak self] code in
 }
 self.view.addSubview(view)
 ```
+
+ `codeNumber`  验证码的长度，一般是4/6位 默认6位
+
+`margin` CodeView 两个验证码之间的间距，可以自定义，默认12
+
+ `style`  验证码输入的风格，可根据自己的需求选择
+
+- **CodeStyle_line**          底部线条风格
+- **CodeStyle_border**    带边框的风格
 
 ### 主要代码
 
