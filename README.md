@@ -4,14 +4,13 @@
 
 ### 预览图
 
-![未输入效果](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/default.png?raw=true)
+![line](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/line.png?raw=true)
 
-![验证码输入](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/input.png?raw=true)
+![border](https://github.com/Mebsunny/CodeView/blob/master/Screenshot/border.png?raw=true)
 
 ### 说明
 
 `CodeView` 是纯`swift`编写的一个可以高度自定义手机验证码输入的控件。
-
 
 **原理：** 基于UITextField，使用UILabel来代替验证码的显示，使用CAShapeLayer代替光标的显示，使用CALayer绘制底部线条
 
@@ -23,10 +22,17 @@
 
 * **labelArray：** 自定义文字存放的数组
 
-### 使用方法
+### 使用方法 
+
+ `style`  验证码输入的风格，可根据自己的需求选择
+
+ `codeNumber`  验证码的长度，一般是4/6位 默认6位
+
+* **CodeStyle_line**          底部线条风格
+* **CodeStyle_border**    带边框的风格
 
 ```swift
-let view = CodeView.init(frame: CGRect.init(x: 50, y: 160, width: SCREEN_WIDTH-100, height: 50),codeNumber: 4)
+let view = CodeView.init(frame: CGRect.init(x: 50, y: 160, width: SCREEN_WIDTH-100, height: 50),codeNumber: 4,style: .CodeStyle_line)
 view.codeBlock = { [weak self] code in
     print("\n\n=======>您输入的验证码是：\(code)")
 }
@@ -64,22 +70,6 @@ self.view.addSubview(view)
         changeColorForLayerWithIndex(index: index, hidden: index > verStr.count ? false : true)
     }
 }
-```
-
-### 输入框需求
-
-如果需求是输入框则需要修改下面代码，设置CALayer的边框、圆角即可。
-
-```swift
-//底部线条
-let layer = CALayer.init()
-layer.frame = CGRect.init(x: 6, y: K_W-1, width: K_W-12, height: 1)
-if index == 0 {
-    layer.backgroundColor = mainColor?.cgColor
-}else{
-    layer.backgroundColor = normalColor?.cgColor
-}
-subView.layer.addSublayer(layer)
 ```
 
 ### 其他

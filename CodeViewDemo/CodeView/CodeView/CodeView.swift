@@ -10,6 +10,11 @@ import UIKit
 
 let per_width:CGFloat = 50
 
+enum  CodeStyle {
+    case CodeStyle_line      //下划线格式
+    case CodeStyle_border    //带边框格式
+}
+
 class CodeView: UIView {
     
     fileprivate var shapeArray:[CAShapeLayer] = Array()
@@ -19,6 +24,7 @@ class CodeView: UIView {
     public var mainColor:UIColor?
     public var normalColor:UIColor?
     public var labelTextColor:UIColor?
+    public var style:CodeStyle?
     public var codeBlock: ((String) -> Void)?
     public lazy var textField: UITextField = {
             let view = UITextField.init()
@@ -41,12 +47,13 @@ class CodeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(frame:CGRect,codeNumber:Int = 6,labelTextColor:UIColor = UIColor.black, mainColor:UIColor = UIColor.orange,normalColor:UIColor = UIColor.gray) {
+    init(frame:CGRect,codeNumber:Int = 6,style:CodeStyle,labelTextColor:UIColor = UIColor.black, mainColor:UIColor = UIColor.orange,normalColor:UIColor = UIColor.gray) {
         super.init(frame: frame)
         self.codeNumber = codeNumber
         self.labelTextColor = labelTextColor
         self.mainColor = mainColor
         self.normalColor = normalColor
+        self.style = style
         setUpSubview()
     }
 
@@ -62,11 +69,24 @@ class CodeView: UIView {
             
             //底部线条
             let layer = CALayer.init()
-            layer.frame = CGRect.init(x: 6, y: per_width-1, width: per_width-12, height: 1)
-            if index == 0 {
-                layer.backgroundColor = mainColor?.cgColor
+            
+            if style == .CodeStyle_line {
+                layer.frame = CGRect.init(x: 6, y: per_width-1, width: per_width-12, height: 1)
+                if index == 0 {
+                    layer.backgroundColor = mainColor?.cgColor
+                }else{
+                    layer.backgroundColor = normalColor?.cgColor
+                }
             }else{
-                layer.backgroundColor = normalColor?.cgColor
+                layer.frame = CGRect.init(x: 0, y: 0, width: per_width, height: per_width)
+                layer.borderWidth = 0.5
+                layer.cornerRadius = 5
+                layer.backgroundColor = UIColor.white.cgColor
+                if index == 0 {
+                    layer.borderColor = mainColor?.cgColor
+                }else{
+                    layer.borderColor = normalColor?.cgColor
+                }
             }
             subView.layer.addSublayer(layer)
             
@@ -133,9 +153,18 @@ extension CodeView{
     fileprivate func changeColorForLayerWithIndex(index:NSInteger, hidden:Bool) {
         let layer = layerArray[index];
         if (hidden) {
-            layer.backgroundColor = mainColor?.cgColor;
+            if style == .CodeStyle_line {
+                layer.backgroundColor = mainColor?.cgColor;
+            }else{
+                layer.borderColor = mainColor?.cgColor;
+            }
+            
         }else{
-            layer.backgroundColor = normalColor?.cgColor;
+            if style == .CodeStyle_line {
+                layer.backgroundColor = normalColor?.cgColor;
+            }else{
+                layer.borderColor = normalColor?.cgColor;
+            }
         }
     }
 
