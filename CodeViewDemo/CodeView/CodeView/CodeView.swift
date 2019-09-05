@@ -17,15 +17,15 @@ enum  CodeStyle {
 
 class CodeView: UIView {
     
-    fileprivate var shapeArray:[CAShapeLayer] = Array()
-    fileprivate var labelArray:[UILabel] = Array()
-    fileprivate var layerArray:[CALayer] = Array()
-    public var codeNumber:Int = 0
-    public var mainColor:UIColor?
-    public var normalColor:UIColor?
-    public var labelTextColor:UIColor?
-    public var style:CodeStyle?
-    public var codeBlock: ((String) -> Void)?
+    fileprivate var shapeArray:[CAShapeLayer] = Array()  //自定义底部线条、边框存放的数组
+    fileprivate var labelArray:[UILabel] = Array()       //光标数组
+    fileprivate var layerArray:[CALayer] = Array()       //文字存放的数组
+    public var codeNumber:Int = 0                        //验证码位数
+    public var mainColor:UIColor?                        //光标颜色和输入验证码的边框、线条颜色
+    public var normalColor:UIColor?                      //未选中的颜色
+    public var labelTextColor:UIColor?                   //验证码文字的验证
+    public var style:CodeStyle?                          //输入框的风格
+    public var codeBlock: ((String) -> Void)?            //验证码回调
     public lazy var textField: UITextField = {
             let view = UITextField.init()
             view.tintColor = UIColor.clear
@@ -58,7 +58,8 @@ class CodeView: UIView {
     }
 
     fileprivate func setUpSubview() {
-        let width = (self.bounds.width - CGFloat(codeNumber-1)*margin)/CGFloat(codeNumber)  //每一个验证码的宽度
+        //每一个验证码的宽度
+        let width = (self.bounds.width - CGFloat(codeNumber-1)*margin)/CGFloat(codeNumber)
         self.addSubview(textField)
         textField.frame = self.bounds
         for index in 0..<codeNumber  {
@@ -67,7 +68,7 @@ class CodeView: UIView {
             subView.isUserInteractionEnabled = false
             self.addSubview(subView)
             
-            //底部线条
+            //底部线条、边框的格式
             let layer = CALayer.init()
             
             if style == .CodeStyle_line {
@@ -90,7 +91,7 @@ class CodeView: UIView {
             }
             subView.layer.addSublayer(layer)
             
-            //验证码文字
+            //验证码文字设置
             let label = UILabel.init()
             label.frame = CGRect.init(x: 0, y: 0, width: width, height: width)
             label.textAlignment = .center
@@ -100,7 +101,7 @@ class CodeView: UIView {
             subView.addSubview(label)
             
             //光标
-            let path  = UIBezierPath.init(rect: CGRect.init(x: width/2, y: 15, width: 2, height:width-30))
+            let path  = UIBezierPath.init(rect: CGRect.init(x: width/2, y: (width/2)-8, width: 2, height:16))
             let line = CAShapeLayer.init()
             line.path = path.cgPath
             line.fillColor = mainColor?.cgColor
@@ -125,16 +126,17 @@ extension CodeView{
 @objc func textChage(_ textField: UITextField) {
     var verStr:String = textField.text ?? ""
     if verStr.count > codeNumber {
-        let substring = textField.text?.prefix(codeNumber)
+        let substring = textField.text?.prefix(codeNumber)   //控制输入文字的长度
         textField.text = String(substring ?? "")
         verStr = textField.text ?? ""
     }
+    //当输入内容等于验证码的长度时候，把输入的验证码回调
     if  verStr.count >= codeNumber {
         if (self.codeBlock != nil) {
             self.codeBlock?(textField.text ?? "")
         }
     }
-    
+    //设置文字的显示和光标的移动
     for index in 0..<codeNumber {
         let label:UILabel = labelArray[index]
         if (index < verStr.count){
@@ -149,7 +151,7 @@ extension CodeView{
     }
 }
 
-    //设置底部layer的颜色
+    //根据文字所在的位置设置底部layer的颜色
     fileprivate func changeColorForLayerWithIndex(index:NSInteger, hidden:Bool) {
         let layer = layerArray[index];
         if (hidden) {
@@ -167,7 +169,7 @@ extension CodeView{
             }
         }
     }
-
+    //根据文字所在的位置改变光标的位置
     fileprivate func changeOpacityAnimalForShapeLayerWithIndex(index:Int, hidden:Bool) {
         let line = shapeArray[index]
         if hidden {
@@ -180,14 +182,16 @@ extension CodeView{
             line.isHidden = hidden
         }
     }
-    
+    //开启键盘
     public func startEdit() {
         textField.becomeFirstResponder()
     }
+    //关闭键盘
     public func endEdit() {
         textField.resignFirstResponder()
     }
     
+    //模仿光标 闪动效果
     fileprivate func opacityAnimation() -> CABasicAnimation {
         let animation = CABasicAnimation.init(keyPath: "opacity")
         animation.fromValue = 1.0
