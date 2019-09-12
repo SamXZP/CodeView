@@ -18,8 +18,8 @@ enum  CodeStyle {
 class CodeView: UIView {
     
     fileprivate var shapeArray:[CAShapeLayer] = Array()  //自定义底部线条、边框存放的数组
-    fileprivate var labelArray:[UILabel] = Array()       //光标数组
-    fileprivate var layerArray:[CALayer] = Array()       //文字存放的数组
+    fileprivate var labelArray:[UILabel] = Array()       //文字存放的数组
+    fileprivate var layerArray:[CALayer] = Array()       
     public var codeNumber:Int = 0                        //验证码位数
     public var mainColor:UIColor?                        //光标颜色和输入验证码的边框、线条颜色
     public var normalColor:UIColor?                      //未选中的颜色
