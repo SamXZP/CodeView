@@ -2,7 +2,7 @@
 
 ## 新增cocoapods支持
 
-点击 [CodeViewPod](https://github.com/Mebsunny/CodeView/tree/master/CodeView_Swift_Demo) 用swift来编写的
+点击 [CodeViewPod](https://github.com/Mebsunny/CodeViewPod) 用swift来编写的
 
 ### 预览图
 
