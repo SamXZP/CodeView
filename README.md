@@ -1,8 +1,12 @@
 # CodeView
 
 ## 新增cocoapods支持
-
-点击 [CodeViewPod](https://github.com/Mebsunny/CodeViewPod) 用swift来编写的
+**更新说明**
+现在已经支持pod集成 [Sam_CodeVIew](https://github.com/SamXZP/Sam_CodeView)
+```
+source 'https://github.com/SamXZP/Sam_CodeViewSpec.git'  //在podfile 里面加上私有库源
+pod 'Sam_CodeView', '1.0.1'   
+```
 
 ### 预览图
 
